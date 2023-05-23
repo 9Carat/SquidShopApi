@@ -11,12 +11,14 @@ namespace SquidShopApi.Controllers
 	[ApiController]
 	public class ProductController : Controller
 	{
+		private readonly IProductRepository _productRepository;
 		private readonly IRepository<Product> _context;
 		private readonly IMapper _mapper;
 		protected ApiResponse _response;
-        public ProductController(IRepository<Product> context, IMapper mapper)
+        public ProductController(IProductRepository productRepository, IMapper mapper)
         {
-			_context = context;
+			//_context = context;
+			_productRepository = productRepository;
 			_mapper = mapper;
 			_response = new();
         }
@@ -27,7 +29,7 @@ namespace SquidShopApi.Controllers
 		{
 			try
 			{
-				IEnumerable<Product> products = await _context.GetAllAsync();
+				IEnumerable<Product> products = await _productRepository.GetAllIncluded();
 				_response.Result = _mapper.Map<List<ProductDTO>>(products);
 				_response.StatusCode = HttpStatusCode.OK;
 				return Ok(_response);
