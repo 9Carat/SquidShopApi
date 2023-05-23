@@ -29,7 +29,7 @@ namespace SquidShopApi.Controllers
 		{
 			try
 			{
-				IEnumerable<Product> products = await _productRepository.GetAllIncluded();
+				IEnumerable<Product> products = await _productRepository.GetAllAsync();
 				_response.Result = _mapper.Map<List<ProductDTO>>(products);
 				_response.StatusCode = HttpStatusCode.OK;
 				return Ok(_response);
@@ -42,7 +42,7 @@ namespace SquidShopApi.Controllers
 			return _response;
 		}
 		//GET WITH ID
-		[HttpGet("{id:int}")]
+		[HttpGet("{id:int}", Name="GetProduct")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,7 +55,7 @@ namespace SquidShopApi.Controllers
 					_response.StatusCode = HttpStatusCode.BadRequest;
 					return BadRequest(_response);
 				}
-				var product = await _context.GetByIdAsync(p => p.ProductId == id);
+				var product = await _productRepository.GetByIdAsync(p => p.ProductId == id);
 				if (product == null)
 				{
 					_response.StatusCode = HttpStatusCode.NotFound;
