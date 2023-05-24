@@ -21,6 +21,6 @@ namespace SquidShopApi.Models
 		[ForeignKey("Categories")]
 		public int FK_CategoryId { get; set; }
 		public Category Categories { get; set; } //nav
-		public virtual ICollection<OrderList> OrderLists { get; set; }//nav
+		//public virtual ICollection<OrderList> OrderLists { get; set; }//nav
 	}
 }
