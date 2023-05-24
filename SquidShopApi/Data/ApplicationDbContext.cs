@@ -15,10 +15,12 @@ namespace SquidShopApi.Data
 		public DbSet<OrderList> OrderLists { get; set; }
 		public DbSet<Product> Products { get; set; }
 		public DbSet<User> Users { get; set; }
+        public DbSet<Promotion> Promotions { get; set; }
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Product>().HasData(
+             
+            modelBuilder.Entity<Product>().HasData(
 				new Product()
 				{
 					ProductId = 1,
@@ -61,5 +63,7 @@ namespace SquidShopApi.Data
 					City = "There"
 				});
 		}
+
+		public DbSet<SquidShopApi.Models.Promotion> Promotion { get; set; }
 	}
 }
