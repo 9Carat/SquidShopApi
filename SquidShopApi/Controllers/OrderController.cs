@@ -11,10 +11,10 @@ namespace SquidShopApi.Controllers
 	[ApiController]
 	public class OrderController : Controller
 	{
-		private readonly IRepository<Order> _context;
+		private readonly IOrderRepository _context;
 		private readonly IMapper _mapper;
 		protected ApiResponse _response;
-		public OrderController(IRepository<Order> context, IMapper mapper)
+		public OrderController(IOrderRepository context, IMapper mapper)
         {
 			_context = context;
 			_mapper = mapper;

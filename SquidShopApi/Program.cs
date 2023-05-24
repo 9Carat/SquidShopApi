@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using SquidShopApi.Data;
 using SquidShopApi.Models;
-using SquidShopApi.Repository.IRepository;
 using SquidShopApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using SquidShopApi.Repository.IRepository;
 
 namespace SquidShopApi
 {
@@ -22,8 +22,8 @@ namespace SquidShopApi
             builder.Services.AddScoped<IRepository<Category>, GenericRepository<Category>>();
             builder.Services.AddScoped<IRepository<User>, GenericRepository<User>>();
             builder.Services.AddScoped<IRepository<IdentityUser>, GenericRepository<IdentityUser>>();
-            builder.Services.AddScoped<IRepository<Order>, GenericRepository<Order>>();
-            builder.Services.AddScoped<IRepository<OrderList>, GenericRepository<OrderList>>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderListRepository, OrderListRepository>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
