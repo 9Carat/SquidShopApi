@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using SquidShopApi.Data;
 using SquidShopApi.Models;
-using SquidShopApi.Repository.IRepository;
 using SquidShopApi.Repository;
 using Microsoft.EntityFrameworkCore;
+using SquidShopApi.Repository.IRepository;
 
 namespace SquidShopApi
 {
@@ -17,12 +17,13 @@ namespace SquidShopApi
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddControllers().AddNewtonsoftJson();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IRepository<Product>, GenericRepository<Product>>();
             builder.Services.AddScoped<IRepository<Category>, GenericRepository<Category>>();
             builder.Services.AddScoped<IRepository<User>, GenericRepository<User>>();
             builder.Services.AddScoped<IRepository<IdentityUser>, GenericRepository<IdentityUser>>();
-            builder.Services.AddScoped<IRepository<Order>, GenericRepository<Order>>();
-            builder.Services.AddScoped<IRepository<OrderList>, GenericRepository<OrderList>>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IOrderListRepository, OrderListRepository>();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

@@ -31,7 +31,7 @@ namespace SquidShopApi.Repository
 			return await temp.ToListAsync();
 		}
 
-		public async Task<T> GetByIdAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
+		public async Task<T> GetByIdAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
 		{
 			IQueryable<T> temp = dbSet;
 			if (tracked == true) 
