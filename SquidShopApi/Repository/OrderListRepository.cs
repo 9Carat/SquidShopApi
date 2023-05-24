@@ -32,7 +32,7 @@ namespace SquidShopApi.Repository
             {
                 temp = temp.Where(filter);
             }
-            return await temp.Include(x => x.Orders).Include(x => x.Products).OrderBy(x=>x.OrderListId).ToListAsync();
+            return await temp.Include(x => x.Products).Include(x => x.Orders).OrderBy(x=>x.OrderListId).ToListAsync();
         }
 
         public async Task<OrderList> GetByIdAsync(Expression<Func<OrderList, bool>>? filter = null, bool tracked = true)
