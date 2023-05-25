@@ -10,6 +10,6 @@ namespace SquidShopApi.Models.DTO
 		public User Users { get; set; }
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
 		public bool OrderStatus { get; set; }
-        public virtual ICollection<OrderList> OrderLists { get; set; }//nav
+    public virtual ICollection<OrderList> OrderLists { get; set; }//nav
     }
 }

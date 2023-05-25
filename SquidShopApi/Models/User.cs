@@ -22,7 +22,5 @@ namespace SquidShopApi.Models
         [StringLength(50)]
         public string City { get; set; }
         public string? FK_UsersId { get; set; }
-        //public ICollection<Order> Orders { get; set; }
-
     }
 }

@@ -9,8 +9,7 @@ namespace SquidShopApi.Models.DTO
 		public double Price { get; set; }
 		public int Quantity { get; set; }
 		[ForeignKey("Products")]
-        [DisplayName("Product")]
-        public int FK_ProductId { get; set; }
+		public int FK_ProductId { get; set; }
 		public Product Products { get; set; }
 		[ForeignKey("Orders")]
 		public int FK_OrderId { get; set; }
