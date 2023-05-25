@@ -25,30 +25,62 @@ namespace SquidShopApi.Repository
             await SaveAsync();
         }
 
-        public async Task<List<User>> GetAllAsync(Expression<Func<User, bool>> filter = null)
-        {
-            IQueryable<User> temp = _context.Users;
-            if (filter != null)
-            {
-                temp = temp.Where(filter);
-            }
-            return await temp.Include(x => x.Orders).ToListAsync();
-        }
+        //public async Task<List<User>> GetAllAsync(Expression<Func<User, bool>> filter = null)
+        //{
+        //    IQueryable<User> temp = _context.Users.Include(x => x.Orders);
+        //    if (filter != null)
+        //    {
+        //        temp = temp.Where(filter);
+        //    }
+        //    return await temp.Select(u=> new User
+        //    {
+        //        UserId = u.UserId,
+        //        FirstName = u.FirstName,
+        //        LastName = u.LastName,
+        //        Address = u.Address,
+        //        PostalCode = u.PostalCode,
+        //        City = u.City,
+        //        FK_UsersId = u.FK_UsersId,
+        //        Orders = u.Orders.Select(o=> new Order
+        //        {
+        //            OrderId = o.OrderId,
+        //            OrderStatus = o.OrderStatus,
+        //            CreatedAt = o.CreatedAt,
+        //            FK_UserId = o.FK_UserId,
+        //        }).ToList()
+        //    }).ToListAsync();
+        //}
 
-        public async Task<User> GetByIdAsync(Expression<Func<User, bool>>? filter = null, bool tracked = true)
-        {
-            IQueryable<User> temp = _context.Users.Include(x => x.Orders);
-            if (!tracked == true)
-            {
-                temp = temp.AsNoTracking();
-            }
-            if (filter != null)
-            {
-                temp = temp.Where(filter);
+        //public async Task<User> GetByIdAsync(Expression<Func<User, bool>>? filter = null, bool tracked = true)
+        //{
+        //    IQueryable<User> temp = _context.Users.Include(x => x.Orders);
+        //    if (!tracked == true)
+        //    {
+        //        temp = temp.AsNoTracking();
+        //    }
+        //    if (filter != null)
+        //    {
+        //        temp = temp.Where(filter);
                     
-            }
-            return await temp.FirstOrDefaultAsync();
-        }
+        //    }
+        //    return await temp.Select(u => new User
+        //    {
+        //        UserId = u.UserId,
+        //        FirstName = u.FirstName,
+        //        LastName = u.LastName,
+        //        Address = u.Address,
+        //        PostalCode = u.PostalCode,
+        //        City = u.City,
+        //        FK_UsersId = u.FK_UsersId,
+        //        Orders = u.Orders.Select(o => new Order
+        //        {
+        //            OrderId = o.OrderId,
+        //            OrderStatus = o.OrderStatus,
+        //            CreatedAt = o.CreatedAt,
+        //            FK_UserId = o.FK_UserId,
+        //        }).ToList()
+        //    }).FirstOrDefaultAsync();
+        //}
 
         public async Task RemoveAsync(User entity)
         {

@@ -22,7 +22,7 @@ namespace SquidShopApi
             });
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IRepository<Product>, GenericRepository<Product>>();
-            builder.Services.AddScoped<IRepository<Category>, GenericRepository<Category>>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IRepository<IdentityUser>, GenericRepository<IdentityUser>>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();

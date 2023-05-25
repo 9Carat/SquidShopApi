@@ -27,12 +27,21 @@ namespace SquidShopApi.Repository
 
         public async Task<List<Order>> GetAllAsync(Expression<Func<Order, bool>> filter = null)
         {
-            IQueryable<Order> temp = _context.Orders;
+            IQueryable<Order> temp = _context.Orders.Include(x => x.Users);
             if (filter != null)
             {
                 temp = temp.Where(filter);
             }
-            return await temp.Include(x => x.Users).ToListAsync();
+            return await temp.Select(o => new Order
+            {
+                OrderId = o.OrderId,
+                FK_UserId = o.FK_UserId,
+                Users = o.Users,
+                CreatedAt = o.CreatedAt,
+                OrderLists = o.OrderLists,
+                OrderStatus = o.OrderStatus,
+
+            }).ToListAsync();
         }
 
         public async Task<Order> GetByIdAsync(Expression<Func<Order, bool>>? filter = null, bool tracked = true)
@@ -47,7 +56,16 @@ namespace SquidShopApi.Repository
                 temp = temp.Where(filter);
                     
             }
-            return await temp.FirstOrDefaultAsync();
+            return await temp.Select(o=> new Order
+            {
+                OrderId = o.OrderId,
+                FK_UserId = o.FK_UserId,
+                Users = o.Users,
+                CreatedAt = o.CreatedAt,
+                OrderLists = o.OrderLists,
+                OrderStatus = o.OrderStatus,
+                
+            }).FirstOrDefaultAsync();
         }
 
         public async Task RemoveAsync(Order entity)
