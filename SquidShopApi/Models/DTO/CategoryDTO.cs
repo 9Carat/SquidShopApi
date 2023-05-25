@@ -12,6 +12,6 @@ namespace SquidShopApi.Models.DTO
         public string CategoryName { get; set; }
         [StringLength(200)]
         public string Details { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } //nav
     }
 }

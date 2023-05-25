@@ -27,15 +27,27 @@ namespace SquidShopApi.Repository
 
         public async Task<List<OrderList>> GetAllAsync(Expression<Func<OrderList, bool>> filter = null)
         {
-            IQueryable<OrderList> temp = _context.OrderLists;
+            IQueryable<OrderList> temp = _context.OrderLists.Include(x => x.Orders).Include(x => x.Products);
             if (filter != null)
             {
                 temp = temp.Where(filter);
             }
-            return await temp.Include(x => x.Products).Include(x => x.Orders).OrderBy(x=>x.OrderListId).ToListAsync();
+
+            return await temp.Select(o=> new OrderList
+            {
+                OrderListId = o.OrderListId,
+                Price = o.Price,
+                Quantity = o.Quantity,
+                FK_ProductId = o.FK_ProductId,
+                Products = o.Products,
+                FK_OrderId = o.FK_OrderId,
+                Orders = o.Orders,
+                
+            }).OrderBy(x=>x.OrderListId).ToListAsync();
+
         }
 
-        public async Task<OrderList> GetByIdAsync(Expression<Func<OrderList, bool>>? filter = null, bool tracked = true)
+        public async Task<OrderList> GetByIdAsync(Expression<Func<OrderList, bool>> filter = null, bool tracked = true)
         {
             IQueryable<OrderList> temp = _context.OrderLists.Include(x => x.Orders).Include(x => x.Products);
             if (!tracked == true)

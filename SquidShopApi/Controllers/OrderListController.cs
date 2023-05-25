@@ -55,13 +55,13 @@ namespace SquidShopApi.Controllers
 					_response.StatusCode = HttpStatusCode.BadRequest;
 					return BadRequest();
 				}
-				var orders = await _context.GetByIdAsync(p => p.FK_OrderId == id);
+				var orders = await _context.GetByIdAsync(p => p.OrderListId == id);
 				if (orders == null)
 				{
 					_response.StatusCode = HttpStatusCode.NotFound;
 					return NotFound();
 				}
-				_response.Result = _mapper.Map<OrderListDTO>(orders);
+				_response.Result = _mapper.Map<OrderList>(orders);
 				_response.StatusCode = HttpStatusCode.OK;	
 				return Ok(_response);
 			}
@@ -77,7 +77,7 @@ namespace SquidShopApi.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ApiResponse>> AddOrderList([FromBody] OrderListDTO orderListDTO)
+		public async Task<ActionResult<ApiResponse>> AddOrderList([FromBody] OrderListUpdateDTO orderListDTO)
 		{
 			try
 			{
@@ -87,7 +87,7 @@ namespace SquidShopApi.Controllers
 				}
 				OrderList orders = _mapper.Map<OrderList>(orderListDTO);
 				await _context.CreateAsync(orders);
-				_response.Result = _mapper.Map<OrderListDTO>(orders);
+				_response.Result = _mapper.Map<OrderListUpdateDTO>(orders);
 				_response.StatusCode = HttpStatusCode.Created;
 				return CreatedAtAction(nameof(GetOrderList), new { id = orders.OrderListId }, _response);
 			}
