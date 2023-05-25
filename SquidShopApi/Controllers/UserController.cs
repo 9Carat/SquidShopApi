@@ -15,11 +15,11 @@ namespace SquidShopApi.Controllers
     [ApiController]
     public class UserController : Controller
     {
-        private readonly IRepository<User> _context;
+        private readonly IUserRepository _context;
         //private readonly IRepository<IdentityUser> _iu;
         private readonly IMapper _mapper;
         protected ApiResponse _response;
-        public UserController(IRepository<User> context, IMapper mapper/*, IRepository<IdentityUser> iu*/)
+        public UserController(IUserRepository context, IMapper mapper/*, IRepository<IdentityUser> iu*/)
         {
             _context = context;
             _mapper = mapper;

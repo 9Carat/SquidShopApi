@@ -13,6 +13,6 @@ namespace SquidShopApi.Models
 		public User Users { get; set; }//nav
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
 		public bool OrderStatus { get; set; }
-		public virtual ICollection<OrderList> OrderLists { get; set; }//nav
+		//public virtual ICollection<OrderList> OrderLists { get; set; }//nav
 	}
 }

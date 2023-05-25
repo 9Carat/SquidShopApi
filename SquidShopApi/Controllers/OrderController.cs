@@ -75,7 +75,7 @@ namespace SquidShopApi.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ApiResponse>> AddOrder([FromBody] OrderDTO orderDTO)
+		public async Task<ActionResult<ApiResponse>> AddOrder([FromBody] OrderCreateDTO orderDTO)
 		{
 			try
 			{
@@ -89,7 +89,7 @@ namespace SquidShopApi.Controllers
 				}
 				Order order = _mapper.Map<Order>(orderDTO);
 				await _context.CreateAsync(order);
-				_response.Result = _mapper.Map<OrderDTO>(order);
+				_response.Result = _mapper.Map<OrderCreateDTO>(order);
 				_response.StatusCode = HttpStatusCode.OK;
 				return CreatedAtAction(nameof(GetOrder), new { id = order.OrderId }, _response);
 			}
