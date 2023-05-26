@@ -9,76 +9,72 @@ using Microsoft.AspNetCore.Identity;
 
 namespace SquidShopApi.Controllers
 {
-    // Under construction***********
-
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
     {
-        private readonly IUserRepository _context;
-        //private readonly IRepository<IdentityUser> _iu;
+        private readonly IRepository<User> _context;
         private readonly IMapper _mapper;
         protected ApiResponse _response;
-        public UserController(IUserRepository context, IMapper mapper/*, IRepository<IdentityUser> iu*/)
+        public UserController(IRepository<User> context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
-            //_iu = iu;
             _response = new();
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        //public async Task<ActionResult<ApiResponse>> GetUser()
-        //{
-        //    try
-        //    {
-        //        IEnumerable<User> userList = await _context.GetAllAsync();
-        //        _response.Result = _mapper.Map<List<UserDTO>>(userList);
-        //        _response.StatusCode = HttpStatusCode.OK;
-        //        return Ok(_response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _response.IsSuccess = false;
-        //        _response.ErrorMessages
-        //            = new List<string>() { ex.ToString() };
-        //    }
-        //    return _response;
-        //}
+        public async Task<ActionResult<ApiResponse>> GetUser()
+        {
+            try
+            {
+                IEnumerable<User> userList = await _context.GetAllAsync();
+                _response.Result = _mapper.Map<List<UserDTO>>(userList);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
 
-        //[HttpGet("{id:int}", Name = "GetUser")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<ApiResponse>> GetUser(int id)
-        //{
-        //    try
-        //    {
-        //        if (id == 0)
-        //        {
-        //            _response.StatusCode = HttpStatusCode.BadRequest;
-        //            return BadRequest(_response);
-        //        }
-        //        var user = await _context.GetByIdAsync(u => u.UserId == id);
-        //        if (user == null)
-        //        {
-        //            _response.StatusCode = HttpStatusCode.NotFound;
-        //            return NotFound(_response);
-        //        }
-        //        _response.Result = _mapper.Map<UserDTO>(user);
-        //        _response.StatusCode = HttpStatusCode.OK;
-        //        return Ok(_response);
+        [HttpGet("{id:int}", Name = "GetUser")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApiResponse>> GetUser(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                var user = await _context.GetByIdAsync(u => u.UserId == id);
+                if (user == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
+                _response.Result = _mapper.Map<UserDTO>(user);
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _response.IsSuccess = false;
-        //        _response.ErrorMessages
-        //            = new List<string>() { ex.ToString() };
-        //    }
-        //    return _response;
-        //}
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -88,21 +84,20 @@ namespace SquidShopApi.Controllers
         {
             try
             {
-                //if (await _context.GetByIdAsync(u => u.Id == createDto.FK_UsersId) != null)
-                //{
-                //    ModelState.AddModelError("Custom error", "This user already exist");
-                //    return BadRequest(ModelState);
-                //}
+                if (await _context.GetByIdAsync(u => u.FK_UsersId == createDto.FK_UsersId) != null)
+                {
+                    ModelState.AddModelError("Custom error", "This user already exist");
+                    return BadRequest(ModelState);
+                }
                 if (createDto == null)
                 {
                     return BadRequest(createDto);
                 }
                 User user = _mapper.Map<User>(createDto);
-                // user.FK_userid = SignedInUser id ??? 
                 await _context.CreateAsync(user);
                 _response.Result = _mapper.Map<UserDTO>(user);
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetUser", new { id = user.UserId}, _response);
+                return CreatedAtRoute("GetUser", new { id = user.UserId }, _response);
             }
             catch (Exception ex)
             {
@@ -117,38 +112,36 @@ namespace SquidShopApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //public async Task<ActionResult<ApiResponse>> DeleteUser(int id)
-        //{
-        //    try
-        //    {
-        //        if (id == 0)
-        //        {
-        //            _response.StatusCode = HttpStatusCode.BadRequest;
-        //            return BadRequest(_response);
-        //        }
-        //        var user = await _context.GetByIdAsync(u => u.UserId == id);
-        //        //var netuser = await _iu.GetByIdAsync(u => u.Id == user.FK_UsersId);
-        //        if (user == null)
-        //        {
-        //            _response.StatusCode = HttpStatusCode.NotFound;
-        //            return NotFound(_response);
-        //        }
+        public async Task<ActionResult<ApiResponse>> DeleteUser(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                var user = await _context.GetByIdAsync(u => u.UserId == id);
+                if (user == null)
+                {
+                    _response.StatusCode = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
 
-        //        await _context.RemoveAsync(user);
-        //        //await _iu.RemoveAsync(netuser);
-        //        _response.StatusCode = HttpStatusCode.NoContent;
-        //        _response.IsSuccess = true;
-        //        return Ok(_response);
+                await _context.RemoveAsync(user);
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _response.IsSuccess = false;
-        //        _response.ErrorMessages
-        //            = new List<string>() { ex.ToString() };
-        //    }
-        //    return _response;
-        //}
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
 
         [HttpPut("{id:int}", Name = "UpdateUser")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
