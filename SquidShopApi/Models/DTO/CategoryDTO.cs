@@ -5,8 +5,6 @@ namespace SquidShopApi.Models.DTO
 {
     public class CategoryDTO
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CategoryId { get; set; }
         [StringLength(50)]
         public string CategoryName { get; set; }
