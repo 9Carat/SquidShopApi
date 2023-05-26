@@ -13,6 +13,6 @@ namespace SquidShopApi.Models.DTO
 		[ForeignKey("Categories")]
 		public int FK_CategoryId { get; set; }
 		public Category Categories { get; set; }
-    public virtual ICollection<OrderList> OrderLists { get; set; }//nav
+		public virtual ICollection<OrderList> OrderLists { get; set; }//nav
     }
 }
