@@ -9,7 +9,9 @@ namespace SquidShopApi.Models.DTO
 		public string ProductName { get; set; }
 		public int InStock { get; set; }
 		public double UnitPrice { get; set; }
-		public string ImageName { get; set; }
+        public decimal Discount { get; set; }
+        public double DiscountUnitPrice { get; set; }
+        public string ImageName { get; set; }
 		[ForeignKey("Categories")]
 		public int FK_CategoryId { get; set; }
 		public Category Categories { get; set; }
