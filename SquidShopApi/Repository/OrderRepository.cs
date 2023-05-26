@@ -38,8 +38,16 @@ namespace SquidShopApi.Repository
                 FK_UserId = o.FK_UserId,
                 Users = o.Users,
                 CreatedAt = o.CreatedAt,
-                OrderLists = o.OrderLists,
                 OrderStatus = o.OrderStatus,
+                OrderLists = o.OrderLists.Select(l => new OrderList
+                {
+                    OrderListId = l.OrderListId,
+                    Price = l.Price,
+                    Quantity = l.Quantity,
+                    FK_ProductId = l.FK_ProductId,
+                    Products = l.Products,
+                    FK_OrderId = l.FK_OrderId,
+                }).ToList(),
 
             }).ToListAsync();
         }
@@ -62,9 +70,17 @@ namespace SquidShopApi.Repository
                 FK_UserId = o.FK_UserId,
                 Users = o.Users,
                 CreatedAt = o.CreatedAt,
-                OrderLists = o.OrderLists,
                 OrderStatus = o.OrderStatus,
-                
+                OrderLists = o.OrderLists.Select(l => new OrderList
+                {
+                    OrderListId = l.OrderListId,
+                    Price = l.Price,
+                    Quantity = l.Quantity,
+                    FK_ProductId = l.FK_ProductId,
+                    Products = l.Products,
+                    FK_OrderId = l.FK_OrderId,
+                }).ToList(),
+
             }).FirstOrDefaultAsync();
         }
 

@@ -15,8 +15,8 @@ namespace SquidShopApi.Models
 		public int InStock { get; set; }
 		[Required]
 		public double UnitPrice { get; set; }
-		public decimal Discount { get; set; } = 0;
-		public double DiscountUnitPrice { get; set; } = 0;
+		public decimal Discount { get; set; }
+		public double DiscountUnitPrice { get; set; }
 		public string ImageName { get; set; }
 		[ForeignKey("Categories")]
 		public int FK_CategoryId { get; set; }
