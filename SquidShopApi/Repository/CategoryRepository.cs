@@ -25,8 +25,7 @@ namespace SquidShopApi.Repository
 
 		public async Task<List<Category>> GetAllAsync(Expression<Func<Category, bool>>? filter = null)
         {
-			var result = _context.Categories
-                 .Include(c => c.Products);
+			var result = _context.Categories;
             return await result.ToListAsync();
         }
 
@@ -41,9 +40,7 @@ namespace SquidShopApi.Repository
 			{
 				query = query.Where(filter);
 			}
-			return await query
-				//.Include(c => c.Products)
-				.FirstOrDefaultAsync();
+			return await query.FirstOrDefaultAsync();
 		}
 
 		public async Task RemoveAsync(Category entity)
