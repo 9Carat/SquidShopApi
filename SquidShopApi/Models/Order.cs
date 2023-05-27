@@ -12,6 +12,8 @@ namespace SquidShopApi.Models
 		public int FK_UserId { get; set; }
 		public User Users { get; set; }//nav
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
+		[StringLength(75)]
+		public string ShippingAddress { get; set; }
 		public bool OrderStatus { get; set; }
 		public virtual ICollection<OrderList> OrderLists { get; set; }//nav
 	}

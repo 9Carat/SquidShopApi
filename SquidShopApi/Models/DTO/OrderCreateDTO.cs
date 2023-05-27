@@ -7,6 +7,7 @@ namespace SquidShopApi.Models.DTO
 		public int OrderId { get; set; }
 		public int FK_UserId { get; set; }
 		public DateTime CreatedAt { get; set; } = DateTime.Now;
-		public bool OrderStatus { get; set; }
+        public string ShippingAddress { get; set; }
+        public bool OrderStatus { get; set; }
 	}
 }
