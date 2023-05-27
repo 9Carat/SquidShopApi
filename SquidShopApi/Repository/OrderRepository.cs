@@ -38,6 +38,7 @@ namespace SquidShopApi.Repository
                 FK_UserId = o.FK_UserId,
                 Users = o.Users,
                 CreatedAt = o.CreatedAt,
+                ShippingAddress = o.ShippingAddress,
                 OrderStatus = o.OrderStatus,
                 OrderLists = o.OrderLists.Select(l => new OrderList
                 {
@@ -70,6 +71,7 @@ namespace SquidShopApi.Repository
                 FK_UserId = o.FK_UserId,
                 Users = o.Users,
                 CreatedAt = o.CreatedAt,
+                ShippingAddress= o.ShippingAddress,
                 OrderStatus = o.OrderStatus,
                 OrderLists = o.OrderLists.Select(l => new OrderList
                 {
