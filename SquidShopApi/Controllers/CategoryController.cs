@@ -11,10 +11,10 @@ namespace SquidShopApi.Controllers
     [ApiController]
     public class CategoryController : Controller
     {
-        private readonly IRepository<Category> _context;
+        private readonly ICategoryRepository _context;
         private readonly IMapper _mapper;
         protected ApiResponse _response;
-        public CategoryController(IRepository<Category> context, IMapper mapper)
+        public CategoryController(ICategoryRepository context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
