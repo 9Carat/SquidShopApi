@@ -33,7 +33,7 @@ namespace SquidShopApi.Repository
 		public async Task<Product> GetByIdAsync(Expression<Func<Product, bool>> filter = null, bool tracked = true)
 		{
 			IQueryable<Product> query = _db.Products;
-			if (!tracked == true)
+			if (tracked == true)
 			{
 				query = query.AsNoTracking();
 			}

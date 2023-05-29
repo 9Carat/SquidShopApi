@@ -12,12 +12,10 @@ namespace SquidShopApi.Controllers
 	public class ProductController : Controller
 	{
 		private readonly IProductRepository _productRepository;
-		private readonly IRepository<Product> _context;
 		private readonly IMapper _mapper;
 		protected ApiResponse _response;
         public ProductController(IProductRepository productRepository, IMapper mapper)
         {
-			//_context = context;
 			_productRepository = productRepository;
 			_mapper = mapper;
 			_response = new();
@@ -78,11 +76,11 @@ namespace SquidShopApi.Controllers
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ApiResponse>> AddProduct([FromBody] ProductDTO productDTO)
+		public async Task<ActionResult<ApiResponse>> AddProduct([FromBody] ProductCreateDTO productDTO)
 		{
 			try
 			{
-				if (await _context.GetByIdAsync(p => p.ProductName.ToLower() == productDTO.ProductName.ToLower()) != null)
+				if (await _productRepository.GetByIdAsync(p => p.ProductName.ToUpper() == productDTO.ProductName.ToUpper()) != null)
 				{
 					return BadRequest(ModelState);
 				}
@@ -91,7 +89,7 @@ namespace SquidShopApi.Controllers
 					return BadRequest(productDTO);
 				}
 				Product product = _mapper.Map<Product>(productDTO);
-				await _context.CreateAsync(product);
+				await _productRepository.CreateAsync(product);
 				_response.Result = _mapper.Map<ProductDTO>(product);
 				_response.StatusCode = HttpStatusCode.OK;	
 				return CreatedAtAction(nameof(GetProduct), new { id = product.ProductId }, _response);
@@ -117,7 +115,7 @@ namespace SquidShopApi.Controllers
 					return BadRequest();
 				}
 				Product product = _mapper.Map<Product>(updateDTO);
-				await _context.UpdateAsync(product);
+				await _productRepository.UpdateAsync(product);
 				_response.StatusCode = HttpStatusCode.NoContent;
 				_response.IsSuccess = true;
 				return Ok(_response);
@@ -143,12 +141,12 @@ namespace SquidShopApi.Controllers
 				{
 					return BadRequest();
 				}
-				var product = await _context.GetByIdAsync(p => p.ProductId == id);
+				var product = await _productRepository.GetByIdAsync(p => p.ProductId == id);
 				if (product == null)
 				{
 					return NotFound();
 				}
-				await _context.RemoveAsync(product);
+				await _productRepository.RemoveAsync(product);
 				_response.StatusCode = HttpStatusCode.NoContent;
 				_response.IsSuccess = true;
 				return Ok(_response);

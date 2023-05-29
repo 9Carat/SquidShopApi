@@ -13,6 +13,6 @@ namespace SquidShopApi.Models
 		public string CategoryName { get; set; }
         [StringLength(200)]
         public string Details { get; set; }
-		/*public ICollection<Product> Products { get; set; }*/ //nav
+		//public ICollection<Product> Products { get; set; } //nav
 	}
 }
