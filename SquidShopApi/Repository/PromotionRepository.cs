@@ -15,19 +15,19 @@ namespace SquidShopApi.Repository
         }
         public async Task CreateAsync(Promotion entity)
         {
-            await _context.Promotion.AddAsync(entity);
+            await _context.Promotions.AddAsync(entity);
             await SaveAsync();
         }
 
         public async Task<List<Promotion>> GetAllAsync()
         {
-            var result = _context.Promotion;
+            var result = _context.Promotions;
             return await result.ToListAsync();
         }
 
         public async Task<Promotion> GetByIdAsync(Expression<Func<Promotion, bool>> filter = null, bool tracked = true)
         {
-            IQueryable<Promotion> query = _context.Promotion;
+            IQueryable<Promotion> query = _context.Promotions;
 
             if (!tracked)
             {
@@ -44,7 +44,7 @@ namespace SquidShopApi.Repository
 
         public async Task RemoveAsync(Promotion entity)
         {
-            _context.Promotion.Remove(entity);
+            _context.Promotions.Remove(entity);
             await SaveAsync();
         }
 
@@ -55,7 +55,7 @@ namespace SquidShopApi.Repository
 
         public async Task UpdateAsync(Promotion entity)
         {
-            _context.Promotion.Update(entity);
+            _context.Promotions.Update(entity);
             await SaveAsync();
            
         }
