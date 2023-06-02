@@ -43,20 +43,20 @@ namespace SquidShopApi.Controllers
             return _response;
         }
 
-        [HttpGet("{id:int}", Name = "GetUser")]
+        [HttpGet("{id}", Name = "GetUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ApiResponse>> GetUser(int id)
+        public async Task<ActionResult<ApiResponse>> GetUser(string id)
         {
             try
             {
-                if (id == 0)
+                if (id == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var user = await _context.GetByIdAsync(u => u.UserId == id);
+                var user = await _context.GetByIdAsync(u => u.FK_UsersId == id);
                 if (user == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
@@ -146,7 +146,7 @@ namespace SquidShopApi.Controllers
         [HttpPut("{id:int}", Name = "UpdateUser")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse>> UpdateCategory(int id, [FromBody] UserUpdateDTO updateDto)
+        public async Task<ActionResult<ApiResponse>> UpdateUser(int id, [FromBody] UserUpdateDTO updateDto)
         {
             try
             {

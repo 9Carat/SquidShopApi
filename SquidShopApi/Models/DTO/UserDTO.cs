@@ -6,6 +6,7 @@ namespace SquidShopApi.Models.DTO
     public class UserDTO
     {
         [StringLength(50)]
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         [StringLength(50)]
         public string LastName { get; set; }

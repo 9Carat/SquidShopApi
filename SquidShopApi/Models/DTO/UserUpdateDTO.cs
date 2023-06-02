@@ -15,5 +15,6 @@ namespace SquidShopApi.Models.DTO
         public string PostalCode { get; set; }
         [StringLength(50)]
         public string City { get; set; }
+        public string FK_UsersId { get; set; }
     }
 }
