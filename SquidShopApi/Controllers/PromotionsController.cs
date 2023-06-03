@@ -91,7 +91,7 @@ namespace SquidShopApi.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<ApiResponse>> UpdateProduct(int id, [FromBody] PromotionDTO promotionDTO)
+        public async Task<ActionResult<ApiResponse>> UpdatePromotion(int id, [FromBody] PromotionDTO promotionDTO)
         {
             try
             {
