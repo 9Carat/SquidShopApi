@@ -23,6 +23,8 @@ namespace SquidShopApi
 			CreateMap<Order, OrderCreateDTO>().ReverseMap();
 			CreateMap<OrderList, OrderListDTO>().ReverseMap();
 			CreateMap<OrderList, OrderListUpdateDTO>().ReverseMap();
+
+			CreateMap<Promotion, PromotionDTO>().ReverseMap();
 		}
     }
 }
